@@ -1,0 +1,11 @@
+<div>
+    <table>
+        <tr ng-repeat="email in vm.emails.slice(vm.from, vm.to)">
+            <td>
+                from: {{email.from}}
+            </td>
+            <td>to: {{email.to.join('')}}</td>
+            <td>subject: {{email.subject}}</td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,11 @@
+<div>
+    <input type="text" ng-model="vm.filter" ng-change="vm.onChange(vm.filter, vm.applied)" ng-keyup="vm.onEnter($event, vm.filter, vm.applied)"/>
+    <ul ng-if="vm.matches.byPerson.length">
+        <li ng-repeat="person in vm.matches.byPerson">
+            {{person}}
+        </li>
+    </ul>
+    <span ng-repeat="label in vm.applied">
+        label
+    </span>
+</div>

@@ -1,6 +1,6 @@
 <div>
-    <div ng-repeat="page in paging.range(paging.pages)"
-         ng-click="paging.onChange(page)">
+    <div ng-repeat="page in vm.range(vm.pages).reverse()"
+         ng-click="vm.onChange(page)">
         {{page}}
     </div>
 </div>

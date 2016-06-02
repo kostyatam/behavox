@@ -1,13 +1,13 @@
 export default function pagination () {
     return {
         restrict: 'E',
-        controllerAs: 'paging',
+        controllerAs: 'vm',
         controller: PaginationController,
         template: require('./pagination.html'),
         scope: {
             pages: '=',
-            current: '=',
-            emails: '=',
+            page: '=',
+            offset: '=',
             onChange: '='
         },
         bindToController: true
@@ -16,18 +16,11 @@ export default function pagination () {
 
 class PaginationController {
     constructor ($scope) {
-        $scope.$watch(() => this.emails, (newValue, oldValue) => {
-            if (newValue === oldValue) return;
-            let {pages, emails, current} = this;
-            this.onChange({
-                pages,
-                emails,
-                current
-            })
-        });
+
     }
     range (num) {
         let arr = [];
+        if (!num) return [];
         for(let i = num; i > 0; i-=1) {
             arr.push(i);
         }
