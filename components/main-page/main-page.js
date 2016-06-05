@@ -20,11 +20,11 @@ class mainPageController {
         this.changePage = actionsService.changePage;
         this.changeFilter = actionsService.changeFilter;
         this.addToApplied = actionsService.addToApplied;
+        this.removeApplied = actionsService.removeApplied;
+        this.chooseEmail = actionsService.chooseEmail;
     }
     mapStateToThis (state) {
         let {emails, pagination} = state;
-        console.log('emails.currentObservable.length %s pagination.offset %s', emails.currentObservable.length, pagination.offset);
-        console.log('pages %s page %s offset %s', (emails.currentObservable.length > pagination.offset) ? Math.ceil(emails.currentObservable.length / pagination.offset) : 1, pagination.page, pagination.offset)
         return {
             filter: emails.filter,
             applied: emails.applied,
@@ -35,7 +35,9 @@ class mainPageController {
             cached: emails.cached,
             observable: emails.currentObservable,
             page: pagination.page,
-            offset: pagination.offset
+            offset: pagination.offset,
+            chosenEmail: emails.chosenEmail,
+            isFetching: emails.isFetching
         }
     }
 }

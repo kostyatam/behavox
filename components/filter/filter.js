@@ -10,7 +10,8 @@ export default function filter () {
             applied: '=',
             matches: '=',
             onChange: '=',
-            onApply: '='
+            onApply: '=',
+            onRemoveApplied: '='
         }
     };
 }
@@ -19,11 +20,19 @@ class filterController {
     constructor () {
 
     }
-    onEnter ($event, filter) {
+    onEnter ($event, value, by = 'EVERYWHERE') {
         if ($event.keyCode !== 13) {
             return;
         }
-        debugger
-        this.onApply(filter)
+        this.onApply({
+            value,
+            by
+        }, this.applied);
+    }
+    onFilterChange (value, by = 'EVERYWHERE') {
+        this.onChange({
+            value,
+            by
+        },  this.applied)
     }
 }

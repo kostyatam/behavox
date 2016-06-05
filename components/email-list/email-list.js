@@ -8,7 +8,8 @@ export default function emailsToShow () {
             emails: '=',
             from: '=',
             to: '=',
-            onChange: '='
+            onChange: '=',
+            chooseEmail: '='
         },
         bindToController: true
     };

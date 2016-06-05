@@ -1,3 +1,5 @@
-<email-filter filter="vm.filter" matches="vm.matches" applied="vm.applied" on-change="vm.changeFilter" on-apply="vm.addToApplied"></email-filter>
-<email-list emails="vm.observable" from="vm.from" to="vm.to"></email-list>
+<email-filter filter="vm.filter.value" matches="vm.matches" applied="vm.applied" on-change="vm.changeFilter" on-apply="vm.addToApplied" on-remove-applied="vm.removeApplied"></email-filter>
+<email-list emails="vm.observable" from="vm.from" to="vm.to" choose-email="vm.chooseEmail"></email-list>
+<email-view email="vm.chosenEmail"></email-view>
 <pagination pages="vm.pages" page="vm.page" offset="vm.offset" on-change="vm.changePage"></pagination>
+<div ng-if="!vm.isFetching" style="position: fixed;top:0;left:0;bottom:0;right:0;background-color:#fff;">preloader</div>

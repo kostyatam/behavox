@@ -1,6 +1,6 @@
 <div>
     <table>
-        <tr ng-repeat="email in vm.emails.slice(vm.from, vm.to)">
+        <tr ng-repeat="email in vm.emails.slice(vm.from, vm.to)" ng-click="vm.chooseEmail(email)">
             <td>
                 from: {{email.from}}
             </td>

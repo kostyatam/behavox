@@ -10,7 +10,9 @@ export function actionsService ($q) {
         fetchEmails,
         changePage,
         changeFilter,
-        addToApplied
+        addToApplied,
+        removeApplied,
+        chooseEmail
     };
 
     function requestEmails () {
@@ -42,7 +44,7 @@ export function actionsService ($q) {
         }
     }
 
-    function filterObservable (emails, filter, applied) {
+    function filterObservable (filter, applied, emails) {
         return {
             type: types.FILTER_CHANGE,
             filter,
@@ -52,10 +54,11 @@ export function actionsService ($q) {
     }
 
 
-    function applyFilter (newFilter) {
+    function applyFilter (filter, applied) {
         return {
             type: types.FILTER_APPLY,
-            filter: newFilter
+            filter,
+            applied
         }
     }
 
@@ -63,36 +66,64 @@ export function actionsService ($q) {
         return (dispatch, getState) => {
             const {emails} = getState();
             const {filter, applied} = emails;
-            if (newFilter === filter && isEqual(newApplied, applied)) {
+            const appliedIsEqual = isEqual(newApplied, applied);
+            const filterIsEqual = isEqual(newFilter, filter);
+            if (appliedIsEqual && filterIsEqual) {
                 return;
             }
-            if (newFilter.indexOf(filter) !== -1 && isEqual(newApplied, applied)) {
-                dispatch(filterObservable(emails.currentObservable, newFilter, applied));
+            if (newFilter.value.indexOf(filter.value) !== -1 && newFilter.by === filter.by && isEqual(newApplied, applied)) {
+                dispatch(filterObservable(newFilter, applied, emails.currentObservable));
                 return;
             } else {
-                dispatch(filterObservable(emails.cached, newFilter, applied));
+                dispatch(filterObservable(newFilter, applied, emails.cached));
                 return;
             }
         }
     }
 
-    function addToApplied (filterForApplied, newApplied) {
+    function addToApplied (newFilter, newApplied) {
         return (dispatch, getState) => {
             const {emails} = getState();
             const {filter, applied} = emails;
+            const appliedIsEqual = isEqual(newApplied, applied);
+            const filterIsEqual = isEqual(newFilter, filter);
 
-            if (filter === filterForApplied && isEqual(newApplied, applied)) {
-                dispatch(applyFilter(filterForApplied, newApplied));
+            if (appliedIsEqual && filterIsEqual) {
+                dispatch(applyFilter(newFilter, newApplied));
                 return;
             }
 
-            if (filterForApplied.indexOf(filter) !== -1 && isEqual(newApplied, applied)) {
-                dispatch(filterObservable(emails.currentObservable, '', applied.concat(filterForApplied)));
+            if (newFilter.value.indexOf(filter.value) !== -1 && newFilter.by === filter.by || filter.by === 'EVERYWHERE' && isEqual(newApplied, applied)) {
+                dispatch(filterObservable({
+                    value: '',
+                    by: 'EVERYWHERE'
+                }, applied.concat(newFilter), emails.currentObservable));
                 return;
             } else {
-                dispatch(filterObservable(emails.cached, '', filterForApplied));
+                dispatch(filterObservable({
+                    value: '',
+                    by: 'EVERYWHERE'
+                }, applied.concat(newFilter), emails.cached));
                 return;
             }
+        }
+    }
+
+    function removeApplied (removingApplied) {
+        return (dispatch, getState) => {
+            const {emails} = getState();
+            const {filter, applied} = emails;
+            dispatch(filterObservable(filter, applied.filter(filter => {
+                console.log('filter %s removing %s equaling result', filter, removingApplied, !isEqual(filter, removingApplied));
+                return !isEqual(filter, removingApplied);
+            }), emails.cached));
+        }
+    }
+
+    function chooseEmail (chosenEmail) {
+        return {
+            type: types.CHOOSE_EMAIL,
+            chosenEmail
         }
     }
 }
