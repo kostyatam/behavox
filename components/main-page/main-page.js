@@ -1,3 +1,5 @@
+require('./main-page.styl');
+
 export default function mainPage () {
     return {
         restrict: 'E',
@@ -22,6 +24,9 @@ class mainPageController {
         this.addToApplied = actionsService.addToApplied;
         this.removeApplied = actionsService.removeApplied;
         this.chooseEmail = actionsService.chooseEmail;
+        this.setDateFrom = actionsService.setDateFrom;
+        this.setDateTo = actionsService.setDateTo;
+        this.clearDateFilter = actionsService.clearDateFilter;
     }
     mapStateToThis (state) {
         let {emails, pagination} = state;
@@ -37,7 +42,11 @@ class mainPageController {
             page: pagination.page,
             offset: pagination.offset,
             chosenEmail: emails.chosenEmail,
-            isFetching: emails.isFetching
+            isFetching: emails.isFetching,
+            dateFrom: emails.dateFrom,
+            dateTo: emails.dateTo,
+            dateMax: emails.dateMax,
+            dateMin: emails.dateMin
         }
     }
 }

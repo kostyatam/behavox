@@ -1,3 +1,5 @@
+require('./pagination.styl')
+
 export default function pagination () {
     return {
         restrict: 'E',

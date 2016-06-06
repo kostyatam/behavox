@@ -1,11 +1,16 @@
 <div>
-    <table>
-        <tr ng-repeat="email in vm.emails.slice(vm.from, vm.to)" ng-click="vm.chooseEmail(email)">
-            <td>
-                from: {{email.from}}
-            </td>
-            <td>to: {{email.to.join('')}}</td>
-            <td>subject: {{email.subject}}</td>
-        </tr>
-    </table>
+    <div class="email-item" ng-repeat="email in vm.emails.slice(vm.from, vm.to)" ng-click="vm.chooseEmail(email)">
+        <div class="email-item__row email-item__row_table">
+            <div class="email-item__column">
+                <h2>{{email.subject || 'no title'}}</h2>
+            </div>
+            <div class="email-item__column email-item__column_right">
+                {{email.humanDate}}
+            </div>
+        </div>
+        <div class="email-item__row email-item__row_one-line">
+            <span class="email-item__label">from:</span> {{email.from}}
+            <span class="email-item__label">to:</span> {{email.to.join('; ')}}
+        </div>
+    </div>
 </div>

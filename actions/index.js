@@ -12,7 +12,10 @@ export function actionsService ($q) {
         changeFilter,
         addToApplied,
         removeApplied,
-        chooseEmail
+        chooseEmail,
+        setDateFrom,
+        setDateTo,
+        clearDateFilter
     };
 
     function requestEmails () {
@@ -44,12 +47,14 @@ export function actionsService ($q) {
         }
     }
 
-    function filterObservable (filter, applied, emails) {
+    function filterObservable (filter, applied, emails, dateFrom, dateTo) {
         return {
             type: types.FILTER_CHANGE,
             filter,
             applied,
-            emails
+            emails,
+            dateFrom,
+            dateTo
         }
     }
 
@@ -113,10 +118,46 @@ export function actionsService ($q) {
         return (dispatch, getState) => {
             const {emails} = getState();
             const {filter, applied} = emails;
+            console.log('filter %s', filter)
             dispatch(filterObservable(filter, applied.filter(filter => {
-                console.log('filter %s removing %s equaling result', filter, removingApplied, !isEqual(filter, removingApplied));
                 return !isEqual(filter, removingApplied);
             }), emails.cached));
+        }
+    }
+
+    function setDateFrom (newDateFrom) {
+        return (dispatch, getState) => {
+            const {emails} = getState();
+            const {filter, applied, dateFrom,cached, currentObservable} = emails;
+            if (dateFrom === newDateFrom) return;
+
+            if (newDateFrom > dateFrom) {
+                dispatch(filterObservable(filter, applied, currentObservable, newDateFrom));
+                return;
+            }
+            dispatch(filterObservable(filter, applied, cached, newDateFrom))
+        }
+    }
+
+    function setDateTo (newDateTo) {
+        return (dispatch, getState) => {
+            const {emails} = getState();
+            const {filter, applied, dateFrom, dateTo,cached, currentObservable} = emails;
+            if (dateTo === newDateTo) return;
+
+            if (newDateTo < dateTo) {
+                dispatch(filterObservable(filter, applied, currentObservable, dateFrom, newDateTo));
+                return;
+            }
+            dispatch(filterObservable(filter, applied, cached, dateFrom, newDateTo))
+        }
+    }
+
+    function clearDateFilter () {
+        return (dispatch, getState) => {
+            const {emails} = getState();
+            const {filter, applied, dateMax, dateMin, cached, currentObservable} = emails;
+            dispatch(filterObservable(filter, applied, cached, dateMin, dateMax))
         }
     }
 

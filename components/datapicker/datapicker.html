@@ -1,0 +1,5 @@
+<span>
+    <select ng-options="year for year in vm.years" ng-model="vm.year" ng-change="vm.onDateChange()"></select>
+    <select ng-options="month for month in vm.months" ng-model="vm.month" ng-change="vm.onDateChange()"></select>
+    <select ng-options="day for day in vm.days" ng-model="vm.day" ng-change="vm.onDateChange()"></select>
+</span>

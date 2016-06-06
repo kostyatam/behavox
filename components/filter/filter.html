@@ -1,11 +1,13 @@
 <div>
-    <input type="text" ng-model="vm.filter" ng-change="vm.onFilterChange(vm.filter)" ng-keyup="vm.onEnter($event, vm.filter)"/>
-    <ul ng-if="vm.matches.byPerson.length">
-        <li ng-repeat="person in vm.matches.byPerson" ng-click="vm.onApply({value: person, by: 'PERSON'}, vm.applied)">
-            {{person}}
-        </li>
-    </ul>
-    <span ng-repeat="applied in vm.applied" ng-click="vm.onRemoveApplied(applied)">
+    <div class="filter">
+        <input class="filter__input" placeholder="filter" type="text" ng-model="vm.filter" ng-change="vm.onFilterChange(vm.filter)" ng-keyup="vm.onEnter($event, vm.filter)"/>
+        <ul class="filter__list filter-list" ng-if="vm.matches.byPerson.length">
+            <li class="filter-list__item" ng-repeat="person in vm.matches.byPerson" ng-click="vm.onApply({value: person, by: 'PERSON'}, vm.applied)">
+                {{person}}
+            </li>
+        </ul>
+    </div>
+    <span class="label" ng-class="{'label_everywhere': applied.by ==='EVERYWHERE', 'label_person': applied.by  === 'PERSON'}" ng-repeat="applied in vm.applied" ng-click="vm.onRemoveApplied(applied)">
         {{applied.value}}
     </span>
 </div>

@@ -1,0 +1,41 @@
+.email-item
+  width 100%
+  border-bottom 1px solid #ccc;
+  padding 10px
+  cursor pointer
+
+  &:hover
+    background rgba(#dadada, .2)
+
+  &__head
+    font-size 24px
+
+  &__label
+    font-size 14px
+    color #999
+
+  &__body
+    white-space pre-line
+
+  &__row
+    width 100%
+    margin-bottom 20px
+    &_table
+      display table
+    &_one-line
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+  &__column
+    display table-cell
+    &_right
+      text-align right
+
+    &_to
+      text-overflow ellipsis
+      white-space: nowrap
+      overflow hidden
+
+    &:last-child
+      margin-bottom 0

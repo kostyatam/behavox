@@ -1,5 +1,7 @@
-<div>
-    <div ng-repeat="page in vm.range(vm.pages).reverse()"
+<div class="pagination">
+    <div class="pagination__item"
+         ng-class="{pagination__item_active: page === vm.page}"
+         ng-repeat="page in vm.range(vm.pages).reverse()"
          ng-click="vm.onChange(page)">
         {{page}}
     </div>

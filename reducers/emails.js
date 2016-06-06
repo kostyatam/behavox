@@ -5,6 +5,10 @@ export default function emails (state = {
     isFetching: false,
     cached: [],
     currentObservable: [],
+    dateFrom: null,
+    dateTo: null,
+    dateMax: null,
+    dateMin: null,
     filter: {
         value: '',
         by: 'EVERYWHERE'
@@ -15,7 +19,7 @@ export default function emails (state = {
     applied: [],
     chosenEmail: null
 }, action = {}) {
-    let {emails, filter, applied} = action;
+    let {emails, filter, applied, dateFrom, dateTo} = action;
 
     switch (action.type) {
         case types.REQUEST_EMAILS:
@@ -23,25 +27,50 @@ export default function emails (state = {
                 isFetching: true
             });
         case types.RECEIVE_EMAILS:
+            let dateMax;
+            let dateMin;
+            emails = emails.map((email) => {
+                let date = new Date(email.date);
+                dateFrom = dateFrom || new Date(date);
+                dateTo = dateTo || new Date(date);
+                dateFrom = (dateFrom > date) ? new Date(date.getTime()) : dateFrom;
+                dateTo = (dateTo < date) ? new Date(date.getTime()) : dateTo;
+                email.humanDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+                return email;
+            });
+            dateMin = dateFrom = dateFrom.getTime();
+            dateMax = dateTo = dateTo.getTime();
             return Object.assign({}, state, {
                 cached: emails,
-                currentObservable: emails
+                currentObservable: emails,
+                dateFrom,
+                dateTo,
+                dateMax,
+                dateMin
             });
         case types.FILTER_APPLY:
             return Object.assign({}, state, {
                 applied: applied.concat(filter),
-                filter: '',
+                filter: {
+                    value: '',
+                    by: 'EVERYWHERE'
+                },
                 matches: {
                     byPerson: []
                 }
             });
         case types.FILTER_CHANGE:
+            dateFrom = dateFrom || state.dateFrom;
+            dateTo = dateTo || state.dateTo;
+            emails = filterByDate(emails, dateFrom, dateTo);
             let filtered = filterByAll(emails, filter, applied);
             return Object.assign({}, state, {
                 filter,
                 applied,
                 currentObservable: filtered.filtered,
-                matches: filtered.matches
+                matches: filtered.matches,
+                dateFrom,
+                dateTo
             });
         case types.CHOOSE_EMAIL:
             let {chosenEmail} = action;
@@ -52,7 +81,14 @@ export default function emails (state = {
             return state;
     }
 }
-
+function filterByDate (emails, dateFrom, dateTo) {
+    dateFrom = new Date(dateFrom);
+    dateTo = new Date(dateTo);
+    return emails.filter(email => {
+        let date = new Date(email.date);
+        return  date >= dateFrom && date <= dateTo;
+    })
+}
 function filterByAll (emails, filter, applied) {
 
     let matches = {
@@ -107,6 +143,8 @@ function filterByAll (emails, filter, applied) {
 function isContain (email, filter) {
     if (!filter) return false;
 
+    filter = filter.toLowerCase();
+
     let {subject, body} = email;
     let found = false;
     let persons = [];
@@ -118,10 +156,10 @@ function isContain (email, filter) {
         persons = union(persons, foundInPersons);
     }
 
-    if (body.indexOf(filter) !== -1) {
+    if (body.toLowerCase().indexOf(filter) !== -1) {
         found = true;
     }
-    if (subject.indexOf(filter) !== -1) {
+    if (subject.toLowerCase().indexOf(filter) !== -1) {
         found = true;
     }
 
@@ -132,13 +170,13 @@ function isContain (email, filter) {
 
 function containsPerson (email, filter) {
     if (!filter) return false;
-
+    filter = filter.toLowerCase();
     let {from, to, subject, cc, bcc, body} = email;
     let found = false;
     let persons = [];
 
     to = to.filter(person => {
-        return person.indexOf(filter) !== -1;
+        return person.toLowerCase().indexOf(filter) !== -1;
     });
 
     if (to.length) {
@@ -147,7 +185,7 @@ function containsPerson (email, filter) {
     }
 
     cc = cc.filter(person => {
-        return person.indexOf(filter) !== -1;
+        return person.toLowerCase().indexOf(filter) !== -1;
     });
     if (cc.length) {
         persons = union(persons, cc);
@@ -155,14 +193,14 @@ function containsPerson (email, filter) {
     }
 
     bcc = bcc.filter(person => {
-        return person.indexOf(filter) !== -1;
+        return person.toLowerCase().indexOf(filter) !== -1;
     });
     if (bcc.length) {
         persons = union(persons, bcc);
         found = true;
     }
 
-    if (from.indexOf(filter) !== -1) {
+    if (from.toLowerCase().indexOf(filter) !== -1) {
         persons = union(persons, [from]);
         found = true;
     }

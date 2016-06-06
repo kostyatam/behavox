@@ -1,4 +1,6 @@
 'use strict';
+require('./app.styl');
+
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import ngSinitize from 'angular-sanitize';
@@ -17,6 +19,7 @@ let app = angular.module('app', [ngRedux, uiRouter, ngSinitize])
     .directive('mainPage', directives.mainPage)
     .directive('emailFilter', directives.filter)
     .directive('emailView', directives.emailView)
+    .directive('datapicker', directives.datapicker)
     .config(($ngReduxProvider, $stateProvider, $urlRouterProvider) => {
         $ngReduxProvider.createStoreWith(rootReducer, [thunk, createLogger()]);
         router($stateProvider, $urlRouterProvider);

@@ -1,9 +1,12 @@
+require('./filter.styl');
+
 export default function filter () {
     return {
         restrict: 'E',
         controllerAs: 'vm',
         controller: filterController,
         template: require('./filter.html'),
+        replace: true,
         bindToController: true,
         scope: {
             filter: '=',
@@ -24,6 +27,7 @@ class filterController {
         if ($event.keyCode !== 13) {
             return;
         }
+
         this.onApply({
             value,
             by

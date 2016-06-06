@@ -1,7 +1,19 @@
-<div>
-    <div>from: {{vm.from}}</div>
-    <div>to: {{vm.to}}</div>
-    <div>others: {{vm.others}}</div>
-    <div>subject: {{vm.subject}}</div>
-    <div ng-bind-html="vm.body"  style="white-space: pre-line"></div>
+<div class="email-item email-view" ng-show="vm.show">
+    <div class="email-item__row email-item__row_table">
+        <div class="email-item__column">
+            <h2 class="email-item__head">{{vm.subject}}</h2>
+        </div>
+        <div class="email-item__column email-item__column_right">
+            {{vm.humanDate}}
+        </div>
+    </div>
+    <div class="email-item__row">
+        <span class="email-item__label">from:</span> {{vm.from}}
+    </div>
+    <div class="email-item__row">
+        <span class="email-item__label">to:</span>  {{vm.to}}</div>
+    <div class="email-item__row" ng-if="vm.showOthers" ng-click="vm.toggleOthers()">
+        <span class="email-item__label">others:</span> {{vm.others}}
+    </div>
+    <div class="email-item__row email-item__body" ng-bind-html="vm.body"></div>
 </div>

@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'source-map',
@@ -13,21 +14,27 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'ngRedux Async',
+            title: 'Behavox',
             template: './index.html',
             inject: 'body'
         }),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin(),
+        new ExtractTextPlugin('style.css')
     ],
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loaders: ['babel'],
-            exclude: /node_modules/,
-        },
+        loaders: [
+            {
+                test: /\.js$/,
+                loaders: ['babel'],
+                exclude: /node_modules/
+            },
             {
                 test: /\.html$/,
                 loader: 'html'
+            },
+            {
+                test: /\.styl/,
+                loader: ExtractTextPlugin.extract('style', 'css!autoprefixer!stylus?resolve url')
             }]
     }
 };
