@@ -59,7 +59,7 @@ class emailViewController {
                     from = from.replace(value, `<span style="color:purple">${value}</span>`);
                     cc = cc.map(email => email.replace(value, `<span style="color:purple">${value}</span>`));
                     bcc = bcc.map(email => email.replace(value, `<span style="color:purple">${value}</span>`));
-                    subject = subject.toLowerCase().replace(value, `<span style="color:purple">${value}</span>`);
+                    subject = subject.replace(new RegExp(value, 'ig'), '<span style="color:purple">$&</span>');
                     body = body.replace(new RegExp(value, 'ig'), '<span style="color:purple">$&</span>');
                 }
             });

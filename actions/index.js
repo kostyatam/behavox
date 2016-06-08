@@ -3,8 +3,6 @@ import * as types from '../constants/ActionsTypes';
 import {emails} from '../mock/emails';
 import isEqual from 'lodash/isEqual';
 
-console.log('isEqual', isEqual);
-
 export function actionsService ($q) {
     return {
         fetchEmails,

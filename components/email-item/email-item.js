@@ -33,30 +33,34 @@ class emailItemController {
                     let index = to.indexOf(value);
                     if (index !== -1) {
                         to[index] = `<span style="color:orange">${value}</span>`;
-                        return true;
+                        return false;
                     }
                     index = cc.indexOf(value);
                     if (index !== -1) {
                         cc[index] = `<span style="color:orange">${value}</span>`;
-                        return true;
+                        return false;
                     }
                     index = bcc.indexOf(value);
                     if (index !== -1) {
                         bcc[index] = `<span style="color:orange">${value}</span>`;
-                        return true;
+                        return false;
                     }
 
                     if (from == value) {
                         from = `<span style="color:orange">${value}</span>`;
-                        return true;
+                        return false;
                     }
+                    return false
                 }
+                return true;
+            }).map(filter => {
+                let {by, value} = filter;
                 if (by === 'EVERYWHERE') {
                     to = to.map(email => email.replace(value, `<span style="color:purple">${value}</span>`));
                     from = from.replace(value, `<span style="color:purple">${value}</span>`);
                     cc = cc.map(email => email.replace(value, `<span style="color:purple">${value}</span>`));
                     bcc = bcc.map(email => email.replace(value, `<span style="color:purple">${value}</span>`));
-                    subject = subject.toLowerCase().replace(value, `<span style="color:purple">${value}</span>`);
+                    subject = subject.replace(new RegExp(value, 'ig'), '<span style="color:purple">$&</span>');
                     let index = body.toLowerCase().indexOf(value.toLowerCase());
                     if (index !== -1) {
                         foundInBody = true;
