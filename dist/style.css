@@ -45,8 +45,6 @@
   display: table;
 }
 .email-item__row_one-line {
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 .email-item__column {
@@ -117,7 +115,8 @@
 .email-view:hover {
   background: inherit;
 }
-.main {
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjb21wb25lbnRzL2VtYWlsLWl0ZW0vZW1haWwtaXRlbS5zdHlsIn0= */.main {
   width: 100%;
 }
 .main:after {
@@ -172,6 +171,22 @@
 .header__datepicker {
   width: 40%;
   float: left;
+}
+.preloader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+}
+.preloader {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  top: 50%;
+  left: 50%;
 }
 * {
   box-sizing: border-box;
