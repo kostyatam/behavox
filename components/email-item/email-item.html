@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<div>
+    <div class="email-item__row email-item__row_table">
+        <div class="email-item__column">
+            <h2 ng-bind-html="vm.subject"></h2>
+        </div>
+        <div class="email-item__column email-item__column_right">
+            {{::vm.date}}
+        </div>
+    </div>
+    <div class="email-item__row email-item__row_one-line">
+        <span class="email-item__label">from:</span> <span ng-bind-html="vm.from"></span>
+        <span class="email-item__label">to:</span> <span ng-bind-html="vm.to"></span>
+    </div>
+    <div class="email-item__row email-item__row_one-line">
+        <span class="email-item__label" ng-show="::vm.cc">cc:</span> <span ng-bind-html="vm.cc"></span>
+        <span class="email-item__label" ng-show="::vm.bcc">bcc:</span> <span ng-bind-html="vm.bcc"></span>
+    </div>
+    <div class="email-item__row email-item__body" ng-bind-html="vm.body"></div>
+</div>

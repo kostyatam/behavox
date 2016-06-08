@@ -12,6 +12,7 @@ export default function emailsToShow () {
             from: '=',
             to: '=',
             onChange: '=',
+            filters: '=',
             chooseEmail: '='
         },
         bindToController: true

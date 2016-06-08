@@ -37,6 +37,8 @@ export default function emails (state = {
                 dateTo = (dateTo < date) ? new Date(date.getTime()) : dateTo;
                 email.humanDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
                 return email;
+            }).sort(function(a,b){
+                return new Date(a.date) - new Date(b.date);
             });
             dateMin = dateFrom = dateFrom.getTime();
             dateMax = dateTo = dateTo.getTime();

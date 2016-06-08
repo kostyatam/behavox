@@ -1,4 +1,4 @@
-[
+export let emails = [
   {
     "from": "k..allen@enron.com",
     "to": [

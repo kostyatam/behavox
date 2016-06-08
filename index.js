@@ -19,6 +19,7 @@ let app = angular.module('app', [ngRedux, uiRouter, ngSinitize])
     .directive('mainPage', directives.mainPage)
     .directive('emailFilter', directives.filter)
     .directive('emailView', directives.emailView)
+    .directive('emailItem', directives.emailItem)
     .directive('datapicker', directives.datapicker)
     .config(($ngReduxProvider, $stateProvider, $urlRouterProvider) => {
         $ngReduxProvider.createStoreWith(rootReducer, [thunk, createLogger()]);

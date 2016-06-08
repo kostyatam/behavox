@@ -46,7 +46,8 @@ class mainPageController {
             dateFrom: emails.dateFrom,
             dateTo: emails.dateTo,
             dateMax: emails.dateMax,
-            dateMin: emails.dateMin
+            dateMin: emails.dateMin,
+            filters: [].concat(emails.filter, emails.applied)
         }
     }
 }

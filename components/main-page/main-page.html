@@ -10,14 +10,14 @@
                 <button class="btn" ng-click="vm.clearDateFilter()">Clear</button>
         </div>
         <div class="main__row">
-            <email-list emails="vm.observable" from="vm.from" to="vm.to" choose-email="vm.chooseEmail"></email-list>
+            <email-list emails="vm.observable" from="vm.from" to="vm.to" choose-email="vm.chooseEmail" filters="vm.filters"></email-list>
         </div>
         <div class="main__row">
             <pagination pages="vm.pages" page="vm.page" offset="vm.offset" on-change="vm.changePage"></pagination>
         </div>
     </div>
     <div class="main__column main__column_email">
-        <email-view email="vm.chosenEmail"></email-view>
+        <email-view email="vm.chosenEmail" filters="vm.filters"></email-view>
     </div>
 </div>
 <div ng-if="!vm.isFetching" style="position: fixed;top:0;left:0;bottom:0;right:0;background-color:#fff;">

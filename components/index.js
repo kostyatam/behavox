@@ -4,8 +4,9 @@ import pagination from './pagination/pagination';
 import emailList from './email-list/email-list';
 import filter from './filter/filter';
 import emailView from './email-view/email-view';
-import datapicker from './datapicker/datapicker'
+import datapicker from './datapicker/datapicker';
+import emailItem from './email-item/email-item';
 //pages
 import mainPage from './main-page/main-page';
 
-export default {pagination, emailList, mainPage, filter, emailView, datapicker};
+export default {pagination, emailList, mainPage, filter, emailView, datapicker, emailItem};
